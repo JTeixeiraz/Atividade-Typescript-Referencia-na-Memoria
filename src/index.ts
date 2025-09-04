@@ -1,6 +1,6 @@
 main();
 
-function main():void{
+function main(): void {
     //atividade 1
     let numero = 3;
     let texto = "abacaxi"
@@ -26,7 +26,7 @@ function main():void{
     //Parte A
     const alunos = [
         {nome: "Carla", idade: 19},
-        {nome:"Pedro", idade: 21}
+        {nome: "Pedro", idade: 21}
     ];
     // @ts-ignore
     alunos[1].idade = 25;
@@ -60,10 +60,10 @@ function main():void{
     //Exercicio 3
     //Parte A
     const alunoP3A = {
-        nome:"Hugo",
+        nome: "Hugo",
         idade: 20,
-        endereco:{
-            rua:"Rua A",
+        endereco: {
+            rua: "Rua A",
             numero: 10
         }
     };
@@ -75,13 +75,116 @@ function main():void{
     a2P3A.endereco.rua = "Rua B"
     console.log(alunoP3A, a2P3A);
     //Parte B
-    
+    const alunoP3B = {
+        nome: "Hugo",
+        idade: 20,
+        endereco: {
+            rua: "Rua A",
+            numero: 10
+        }
+    };
+    const copiaProfundaAlunoP3B = {
+        nome: alunoP3B.nome,
+        idade: alunoP3B.idade,
+        endereco: {
+            rua: alunoP3B.endereco.rua,
+            numero: alunoP3B.endereco.numero
+        }
+    };
+    console.log("Copia profunda: ", copiaProfundaAlunoP3B);
+    //Parte C
+    const projeto = {
+        nome: "Projeto X", // nível 1 (primitivo)
+        status: "Em andamento", // nível 1 (primitivo)
+        gerente: { // nível 2 (objeto)
+            nome: "Ana",
+            contato: { // nível 3 (objeto)
+                email: "ana@empresa.com",
+                telefone: "1234-5678"
+            }
+        },
+        tarefas: [  // nível 2 (array de objetos)
+            {
+                titulo: "Planejamento", // nível 3 (primitivo)
+                detalhes: { // nível 4 (objeto)
+                    descricao: "Definir metas",
+                    prazo: "2025-12-01"
+                }
+            },
+            {
+                titulo: "Execução",
+                detalhes: {
+                    descricao: "Implementar features",
+                    prazo: "2026-03-01"
+                }
+            }
+        ]
+    };
+    const copiaRasaProjeto = {
+        nome: projeto.nome,
+        status: projeto.status,
+        gerente: projeto.gerente,
+        tarefas: projeto.tarefas
+    }
+    const copiaProfundaAteNivel2 = {
+        nome: projeto.nome,
+        status: projeto.status,
+        gerente: {
+            nome: projeto.gerente.nome,
+            contato: projeto.gerente.contato
+        },
+        tarefas: [
+            projeto.tarefas[0],
+            projeto.tarefas[1]
+        ]
+    }
+    //Exercicio 5
+    const original = new Aluno2("Joao",20,new Endereco("Rua A", 3))
+    const a2Ex5 = structuredClone(original)
+    a2Ex5.endereco.rua = "Rua B"
+    console.log(a2Ex5, original)
+    original.imprimir();
+    a2Ex5.imprimir();
+    //Parte B.1
+    const copiaparteb1 = Object.assign({}, original)
+    copiaparteb1.nome = "Pedro"
+    copiaparteb1.endereco.rua = "Rua B"
+    console.log(original, copiaparteb1)
+    original.imprimir();
+    copiaparteb1.imprimir();
+    //Parte B.2
+    const a3 = Object.assign(new Aluno2("", 0, new Endereco("",0)), original)
+    a3.nome = "Pedro"
+    a3.endereco.rua = "Rua B"
+    console.log(original, a3)
+    original.imprimir();
+    a3.imprimir();
 }
 
 class Aluno {
-    constructor(public name:string, public idade:number) {}
+    constructor(public name: string, public idade: number) {
+    }
 }
 
-class Turma{
-    constructor(public aluno:Aluno, public codigo:string) {}
+class Aluno2 {
+    constructor(
+        public nome: string,
+        public idade: number,
+        public endereco: Endereco
+    ) {
+    }
+
+    imprimir(): void {
+        // Método para imprimir informações do aluno
+    }
+}
+
+class Endereco {
+    constructor(public rua: string, public numero: number) {
+    }
+}
+
+class Turma {
+    constructor(public aluno: Aluno, public codigo: string) {
+    }
 }
